@@ -16,7 +16,7 @@
     under-damped harmonic oscillator.  
 
     author: @idiegoalvarado
-    github.com/iDiegoAlvarado/
+    repo:   github.com/idiegoalvarado/pinn-dho
 
 """
 
@@ -42,6 +42,7 @@ def under_damped_oscillator(t, d, w0, X0):
         be written as:
 
         (3)               2 A e^(-δt) cos(φ + ωt)). 
+        
     """
     
     assert d < w0
@@ -86,6 +87,7 @@ x_train = x_an[0:t_sample:int(t_sample/n_train)]
     of the neural network is fully-connected.
 
     (4)                 Loss = MSE(x,t,u)
+    
 """
 
 torch.manual_seed(123)
@@ -121,6 +123,7 @@ for i in range(N_ts):
     constrait in the loss (physical loss):
 
     (5)          Loss = MSE(x,t,u) + ODE_loss(x,t,u)
+    
 """
 
 n_phy = 50
@@ -156,7 +159,7 @@ for i in range(N_ts):
         x_pinn.append(xnp)
 
 
-fig, ax = plt.subplots(2, 2, figsize=(12, 8))
+fig, ax = plt.subplots(2, 2, figsize=(11, 9))
 fig.tight_layout(pad=4.0, rect=[0, 0, 1, 0.95])
 fig.suptitle('Standard NN vs. Physics-Informed NN', fontsize=16, fontweight='bold')
 
@@ -211,6 +214,6 @@ ani = animation.FuncAnimation(fig, animate, frames=len(x_pinn),
 
 save_anim = False
 if save_anim:
-    ani.save('pinn_vs_snn_2.mp4', fps=30, dpi=400)
+    ani.save('pinn_vs_snn.mp4', fps=30, dpi=400)
 
 plt.show()
