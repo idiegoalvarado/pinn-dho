@@ -159,8 +159,8 @@ for i in range(N_ts):
         x_pinn.append(xnp)
 
 
-fig, ax = plt.subplots(2, 2, figsize=(11, 9))
-fig.tight_layout(pad=4.0, rect=[0, 0, 1, 0.95])
+fig, ax = plt.subplots(2, 2, figsize=(10, 8.5))
+fig.tight_layout(pad=3.5, rect=[0, 0, 1, 0.95])
 fig.suptitle('Standard NN vs. Physics-Informed NN', fontsize=16, fontweight='bold')
 
 ax[0,0].set_title('Standard NN Fit')
@@ -168,31 +168,33 @@ ax[0,0].set_ylim([- 1.05 * max(x_an), 1.05 * max(x_an)])
 ax[0,0].set_xlabel('$t$ [s]')
 ax[0,0].set_ylabel('$x$ [m]')
 ax[0,0].plot(t, x_an, linestyle='--', color='Grey', label='Analytical solution', zorder=3)
-ax[0,0].scatter(t_train, x_train, color='tab:orange', label='Trainig data')
+ax[0,0].scatter(t_train, x_train, color='tab:orange', label='Training data')
 
 ax[1,0].set_title('Physics-Informed NN Fit')
 ax[1,0].set_ylim([- 1.05 * max(x_an), 1.05 * max(x_an)])
 ax[1,0].set_xlabel('$t$ [s]')
 ax[1,0].set_ylabel('$x$ [m]')
-ax[1,0].plot(t, x_an, linestyle='--', color='Grey', label='Analytical solution', zorder=3)
-ax[1,0].scatter(t_train, x_train, color='tab:orange', label='Trainig data')
+ax[1,0].plot(t, x_an, linestyle='--', color='Grey', zorder=3)
+ax[1,0].scatter(t_train, x_train, color='tab:orange')
 
 ax[0,1].set_title('Approximation error: Standard NN')
 ax[0,1].set_ylim([- 1.05 * max(x_an), 1.05 * max(x_an)])
 ax[0,1].set_xlabel('$t$ [s]')
 ax[0,1].set_ylabel('$x$ [m]')
-ax[0,1].plot(t, x_an*0, linestyle='--', color='Grey', label='Analytical solution', zorder=3)
+ax[0,1].plot(t, x_an*0, linestyle='--', color='Grey', zorder=3)
 
 ax[1,1].set_title('Aproximation error: Physics-Informed NN')
 ax[1,1].set_ylim([- 1.05 * max(x_an), 1.05 * max(x_an)])
 ax[1,1].set_xlabel('$t$ [s]')
 ax[1,1].set_ylabel('$x$ [m]')
-ax[1,1].plot(t, x_an*0, linestyle='--', color='Grey', label='Analytical solution', zorder=3)
+ax[1,1].plot(t, x_an*0, linestyle='--', color='Grey', zorder=3)
 
 line_00, = ax[0,0].plot(t, x_snn[0]      , lw=2, label='NN approximation')
-line_10, = ax[1,0].plot(t, x_pinn[0]     , lw=2, label='NN approximation')
-line_01, = ax[0,1].plot(t, x_an-x_snn[0] , lw=2, label='NN approximation', color='tab:green')
-line_11, = ax[1,1].plot(t, x_an-x_pinn[0], lw=2, label='NN approximation', color='tab:green')
+line_10, = ax[1,0].plot(t, x_pinn[0]     , lw=2)
+line_01, = ax[0,1].plot(t, x_an-x_snn[0] , lw=2, label='NN error', color='tab:green')
+line_11, = ax[1,1].plot(t, x_an-x_pinn[0], lw=2, color='tab:green')
+
+fig.legend(loc='lower center', ncol=4)
 
 label_text = 'Iteration Step: '
 label_fig = fig.text(0.50,0.92, label_text, fontsize=12, 
